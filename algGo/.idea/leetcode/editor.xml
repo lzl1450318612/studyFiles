@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="LeetcodeEditor">
+    <option name="projectConfig">
+      <map>
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/1 two-sum.go">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/1 two-sum.md" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/1 two-sum.go" />
+              <option name="questionId" value="1" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/2 add-two-numbers.go">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/2 add-two-numbers.md" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/2 add-two-numbers.go" />
+              <option name="questionId" value="2" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/3 longest-substring-without-repeating-characters.go">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/3 longest-substring-without-repeating-characters.md" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/3 longest-substring-without-repeating-characters.go" />
+              <option name="questionId" value="3" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/5 longest-palindromic-substring.go">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/5 longest-palindromic-substring.md" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/5 longest-palindromic-substring.go" />
+              <option name="questionId" value="5" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/[1]two-sum.go">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/1 two-sum.md" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/1 two-sum.go" />
+              <option name="questionId" value="1" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/leetcode/editor/cn/[1]两数之和.go">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/1 two-sum.md" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/1 two-sum.go" />
+              <option name="questionId" value="1" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="/var/folders/28/q048wr290tbd2jr2ln9q_s_80000gp/T/leetcode/editor/cn/[1]两数之和.go">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/leetcode/editor/cn/doc/content/1 two-sum.md" />
+              <option name="path" value="$PROJECT_DIR$/leetcode/editor/cn/1 two-sum.go" />
+              <option name="questionId" value="1" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

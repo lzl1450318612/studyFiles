@@ -83,13 +83,25 @@
 
 
 
+### hash算法
 
+- 程序启动时，会检测CPU是否支持AES，如果支持，直接使用AES进行hash（AES指令集）；如果不支持，使用memhash
+
+- key经过hash后，会得到一个64bit位，分配落到哪个桶中只会用到倒数B（B是桶个数的对数，即2^B = len(buckets)）位，例如：
+
+  ```text
+  B = 5，即桶个数为2^5 = 32个
+  10010111 | 000011110110110010001111001010100010010110010101010 │ 01010
+  用到最后5位：01010 = 10
+  所以会落到第10个桶中
+  ```
 
 ### 使用注意
 
-- map是指针，在方法内修改map的值，会影响到方法外
+- map是指针，在方法内修改map的值，会影响到方法外，因为即使值传递copy map的指针，copy完了依然指向原来的map
 - map写入读取都涉及到copy，所以如果往map里放大对象会性能不好，但是往map放指针又会对GC不好，所以要具体场景具体分析
-- map删除key不会自动缩容
+- 在golang 1.5版本之后，如果map的key和value存的不是指针，在GC的时候就不会被扫描，可以利用这个特性节省性能
+- map删除元素不会触发自动缩容
 
 
 
@@ -249,3 +261,147 @@ channel的调用会触发go routine调度（因为channel里面有个recvg字段
   按队列顺序先进先出
 
   如果队列中某个goroutine发现自己加锁成功后自己是队列中的最后一个/等待时间<1ms，就会重新切换回正常模式
+
+
+
+
+
+## Golang调度
+
+
+
+### 什么是调度
+
+指按照一定的算法在适当的时候挑选出合适的goroutine，放到CPU上运行
+
+伪代码如下：
+
+```go
+// 创建N个线程，每个线程执行调度函数
+for i :=0; i < N; i++ {
+  createThread(run(){
+    schedule()
+  })
+}
+
+func schedule() {
+  // 调度主循环
+  for {
+    // 根据算法找出一个需要运行的goroutine
+    g := findGroutine()
+    // 运行goroutine
+    run(g)
+    // 如果运行遇到阻塞点，保存状态（例如读取channel遇到阻塞了）
+    saveStatus(g)
+  }
+   
+}
+```
+
+
+
+### GM模型
+
+<img src="/Users/bytedance/Library/Application Support/typora-user-images/image-20210916154107655.png" alt="image-20210916154107655" style="zoom:30%;float:left" />
+
+存在的问题：
+
+- 存在全局互斥锁，每个线程去获取G的时候都要阻塞全局队列
+- G的传递问题，当第二个G运行的时候，创建了一个新的G，新的G被另一个线程运行会导致隔离性被破坏
+- M持有内存缓存，当G运行阻塞的时候，导致M持有的内存无法释放，造成浪费
+
+计算机科学领域有句话：**任何问题都能通过增加中间层解决：**
+
+### GPM模型
+
+
+
+
+
+
+
+
+
+### 调度流程
+
+<img src="/Users/bytedance/Library/Application Support/typora-user-images/image-20210917154428806.png" alt="image-20210917154428806" style="zoom:30%;float:left;" />
+
+- 当写出go func这样的代码，就会创建G goroutine
+- M会从P的本地队列、全局队列拉取G来执行，如果执行完了没活干，也会别的P的本地队列偷取G来执行
+- M执行调度函数的逻辑主要是执行
+- sysmon是后台监控goroutine，当发现有goroutine执行时间过长，就会抢占
+
+
+
+##### 初始化
+
+伪代码如下：
+
+```go
+func init() {
+	// 初始化栈空间，复用管理链表
+	stackInit()
+
+	// P初始个数为CPU核数
+	PCount := CPUCount
+
+	// P个数不超过 GOMAXPROCS 配置的值
+	if PCount > GOMAXPROCS {
+		PCount = GOMAXPROCS
+	}
+
+	// 调整P的数量
+	procResize(PCount)
+}
+```
+
+```go
+// 把 P 进行去余少补操作
+func procResize(PCount int32) {
+	// 申请新的 P
+	for i := 0; i < PCount; i++ {
+		// P是使用数组存储的
+		P := allP[i]
+		if P == nil {
+			// 如果数组中i位置P不存在，就new一个
+			P = newP(P)
+			// 原子的把P存到P数组中
+			atomicStore(allP[i], P)
+		}
+
+		// 为每个P分配mcache, go采用TCmalloc内存分配，会预先分配空闲内存等待goroutine使用，不够了再去内存中继续分配
+		if P.cache == nil {
+			P.cache = allocMCache()
+		}
+	}
+
+	// 释放多余的P
+	for i := 0; i < GOMAXPROCS; i++ {
+		P := allP[i]
+
+		if P.hasRunq {
+			// 本地任务转移到全局任务队列
+			putIntoGloabalRunq(P.runq)
+		}
+
+		// 释放当前P绑定的mcache
+		freeMCache(P)
+
+		...
+	}
+
+}
+```
+
+
+
+
+
+### 协作式调度&抢占式调度
+
+协作式调度：依靠被调度方主动弃权
+
+抢占式调度：调度器强制将被调度方中断
+
+<img src="/Users/bytedance/Library/Application Support/typora-user-images/image-20210917164403489.png" alt="image-20210917164403489" style="zoom:50%;" />
+
