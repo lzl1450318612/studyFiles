@@ -1,9 +1,5 @@
 package main
 
-import (
-	"fmt"
-)
-
 //给定一个字符串 s ，请你找出其中不含有重复字符的 最长子串 的长度。
 //
 //输入: s = "abcabcbb"
@@ -64,6 +60,6 @@ func lengthOfLongestSubstring(s string) int {
 
 //leetcode submit region end(Prohibit modification and deletion)
 
-func main() {
-	fmt.Println(lengthOfLongestSubstring("aab"))
-}
+//func main() {
+//	fmt.Println(lengthOfLongestSubstring("aab"))
+//}
