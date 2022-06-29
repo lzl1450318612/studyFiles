@@ -1,9 +1,5 @@
 package main
 
-import (
-	"studyFiles/algGo/utils"
-)
-
 //给你两个 非空 的链表，表示两个非负的整数。它们每位数字都是按照 逆序 的方式存储的，并且每个节点只能存储 一位 数字。
 //
 // 请你将两个数相加，并以相同形式返回一个表示和的链表。 
@@ -26,7 +22,7 @@ import (
 
 //leetcode submit region begin(Prohibit modification and deletion)
 
-func addTwoNumbers(l1 *utils.ListNode, l2 *utils.ListNode) *utils.ListNode {
+func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 	switch {
 	case l1 == nil && l2 == nil:
 		return nil
@@ -36,8 +32,8 @@ func addTwoNumbers(l1 *utils.ListNode, l2 *utils.ListNode) *utils.ListNode {
 		return l1
 	}
 
-	var res *utils.ListNode = nil
-	var current *utils.ListNode = nil
+	var res *ListNode = nil
+	var current *ListNode = nil
 
 	overflow := false
 	for l1 != nil || l2 != nil || overflow {
@@ -64,13 +60,13 @@ func addTwoNumbers(l1 *utils.ListNode, l2 *utils.ListNode) *utils.ListNode {
 		}
 
 		if current == nil {
-			current = &utils.ListNode{
+			current = &ListNode{
 				Val:  a,
 				Next: nil,
 			}
 			res = current
 		} else {
-			current.Next = &utils.ListNode{
+			current.Next = &ListNode{
 				Val:  a,
 				Next: nil,
 			}

@@ -31,16 +31,16 @@ func sortColors(nums []int) {
 
 	for i := 0; i < len(nums); i++ {
 		if nums[i] == 0 {
-			nums[num0] = 0
-			nums[num1] = 1
 			nums[num2] = 2
+			nums[num1] = 1
+			nums[num0] = 0
 
 			num0++
 			num1++
 			num2++
 		} else if nums[i] == 1 {
-			nums[num1] = 1
 			nums[num2] = 2
+			nums[num1] = 1
 
 			num1++
 			num2++
@@ -55,7 +55,7 @@ func sortColors(nums []int) {
 //leetcode submit region end(Prohibit modification and deletion)
 
 func main() {
-	arr := []int{1, 2, 0}
+	arr := []int{2, 0, 2, 1, 1, 0}
 	sortColors(arr)
 	fmt.Println(arr)
 }

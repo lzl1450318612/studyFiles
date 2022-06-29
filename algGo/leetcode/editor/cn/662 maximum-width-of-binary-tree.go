@@ -1,9 +1,5 @@
 package main
 
-import (
-	"fmt"
-)
-
 //给定一个二叉树，编写一个函数来获取这个树的最大宽度。树的宽度是所有层中的最大宽度。这个二叉树与满二叉树（full binary tree）结构相同，但一些节
 //点为空。 
 // 每一层的宽度被定义为两个端点（该层最左和最右的非空节点，两端点间的null节点也计入长度）之间的长度。
@@ -53,11 +49,11 @@ import (
 //输出: 8
 //解释: 最大值出现在树的第 4 层，宽度为 8 (6,null,null,null,null,null,null,7)。
 
-type TreeNode struct {
-	Val   int
-	Left  *TreeNode
-	Right *TreeNode
-}
+//type TreeNode struct {
+//	Val   int
+//	Left  *TreeNode
+//	Right *TreeNode
+//}
 
 //leetcode submit region begin(Prohibit modification and deletion)
 func widthOfBinaryTree(root *TreeNode) int {
@@ -89,43 +85,43 @@ func getMaxWidth(root *TreeNode, curIdx, curLevel int, levelArr []int, maxWidth 
 
 //leetcode submit region end(Prohibit modification and deletion)
 
-func main() {
-
-	node4 := &TreeNode{
-		Val:   4,
-		Left:  nil,
-		Right: nil,
-	}
-
-	node5 := &TreeNode{
-		Val:   5,
-		Left:  nil,
-		Right: nil,
-	}
-
-	node7 := &TreeNode{
-		Val:   7,
-		Left:  nil,
-		Right: nil,
-	}
-
-	node2 := &TreeNode{
-		Val:   2,
-		Left:  node4,
-		Right: node5,
-	}
-
-	node3 := &TreeNode{
-		Val:   3,
-		Left:  nil,
-		Right: node7,
-	}
-
-	node1 := &TreeNode{
-		Val:   1,
-		Left:  node2,
-		Right: node3,
-	}
-	fmt.Println(widthOfBinaryTree(node1))
-
-}
+//func main() {
+//
+//	node4 := &TreeNode{
+//		Val:   4,
+//		Left:  nil,
+//		Right: nil,
+//	}
+//
+//	node5 := &TreeNode{
+//		Val:   5,
+//		Left:  nil,
+//		Right: nil,
+//	}
+//
+//	node7 := &TreeNode{
+//		Val:   7,
+//		Left:  nil,
+//		Right: nil,
+//	}
+//
+//	node2 := &TreeNode{
+//		Val:   2,
+//		Left:  node4,
+//		Right: node5,
+//	}
+//
+//	node3 := &TreeNode{
+//		Val:   3,
+//		Left:  nil,
+//		Right: node7,
+//	}
+//
+//	node1 := &TreeNode{
+//		Val:   1,
+//		Left:  node2,
+//		Right: node3,
+//	}
+//	fmt.Println(widthOfBinaryTree(node1))
+//
+//}
