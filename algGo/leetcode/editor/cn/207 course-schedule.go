@@ -17,85 +17,85 @@ package main
 //解释：总共有 2 门课程。学习课程 1 之前，你需要先完成​课程 0 ；并且学习课程 0 之前，你还应先完成课程 1 。这是不可能的。 
 
 //leetcode submit region begin(Prohibit modification and deletion)
-
-type graph struct {
-	nodes map[int]*graphNode
-	edges []*graphEdge
-}
-
-type graphNode struct {
-	val   int
-	In    int
-	Out   int
-	nexts []*graphNode
-	edges []*graphEdge
-}
-
-type graphEdge struct {
-	weight int
-	from   *graphNode
-	to     *graphNode
-}
-
-func buildGraph(edgeArr [][]int) *graph {
-	nodes := make(map[int]*graphNode, len(edgeArr))
-	edges := make([]*graphEdge, len(edgeArr))
-
-	for _, edgeDesc := range edgeArr {
-		var fromNode *graphNode
-		var toNode *graphNode
-		if node, ok := nodes[edgeDesc[1]]; !ok {
-			fromNode = &graphNode{
-				val:   edgeDesc[1],
-				In:    0,
-				Out:   0,
-				nexts: []*graphNode{},
-				edges: []*graphEdge{},
-			}
-		} else {
-			fromNode = node
-		}
-
-		if node, ok := nodes[edgeDesc[0]]; !ok {
-			toNode = &graphNode{
-				val:   edgeDesc[0],
-				In:    0,
-				Out:   0,
-				nexts: []*graphNode{},
-				edges: []*graphEdge{},
-			}
-		} else {
-			toNode = node
-		}
-		toNode.In++
-		toNode.val = edgeDesc[0]
-		toNode.edges = append(toNode.edges, &graphEdge{
-			from: fromNode,
-			to:   toNode,
-		})
-
-		fromNode.Out++
-		fromNode.val = edgeDesc[1]
-		fromNode.nexts = append(fromNode.nexts, toNode)
-		fromNode.edges = append(fromNode.edges, &graphEdge{
-			from: fromNode,
-			to:   toNode,
-		})
-
-		nodes[fromNode.val] = fromNode
-		nodes[toNode.val] = toNode
-
-		edges = append(edges, &graphEdge{
-			from: fromNode,
-			to:   toNode,
-		})
-	}
-
-	return &graph{
-		nodes: nodes,
-		edges: edges,
-	}
-}
+//
+//type graph struct {
+//	nodes map[int]*graphNode
+//	edges []*graphEdge
+//}
+//
+//type graphNode struct {
+//	val   int
+//	In    int
+//	Out   int
+//	nexts []*graphNode
+//	edges []*graphEdge
+//}
+//
+//type graphEdge struct {
+//	weight int
+//	from   *graphNode
+//	to     *graphNode
+//}
+//
+//func buildGraph(edgeArr [][]int) *graph {
+//	nodes := make(map[int]*graphNode, len(edgeArr))
+//	edges := make([]*graphEdge, len(edgeArr))
+//
+//	for _, edgeDesc := range edgeArr {
+//		var fromNode *graphNode
+//		var toNode *graphNode
+//		if node, ok := nodes[edgeDesc[1]]; !ok {
+//			fromNode = &graphNode{
+//				val:   edgeDesc[1],
+//				In:    0,
+//				Out:   0,
+//				nexts: []*graphNode{},
+//				edges: []*graphEdge{},
+//			}
+//		} else {
+//			fromNode = node
+//		}
+//
+//		if node, ok := nodes[edgeDesc[0]]; !ok {
+//			toNode = &graphNode{
+//				val:   edgeDesc[0],
+//				In:    0,
+//				Out:   0,
+//				nexts: []*graphNode{},
+//				edges: []*graphEdge{},
+//			}
+//		} else {
+//			toNode = node
+//		}
+//		toNode.In++
+//		toNode.val = edgeDesc[0]
+//		toNode.edges = append(toNode.edges, &graphEdge{
+//			from: fromNode,
+//			to:   toNode,
+//		})
+//
+//		fromNode.Out++
+//		fromNode.val = edgeDesc[1]
+//		fromNode.nexts = append(fromNode.nexts, toNode)
+//		fromNode.edges = append(fromNode.edges, &graphEdge{
+//			from: fromNode,
+//			to:   toNode,
+//		})
+//
+//		nodes[fromNode.val] = fromNode
+//		nodes[toNode.val] = toNode
+//
+//		edges = append(edges, &graphEdge{
+//			from: fromNode,
+//			to:   toNode,
+//		})
+//	}
+//
+//	return &graph{
+//		nodes: nodes,
+//		edges: edges,
+//	}
+//}
 
 func topologicalSort(graph *graph) []*graphNode {
 	nodes := graph.nodes

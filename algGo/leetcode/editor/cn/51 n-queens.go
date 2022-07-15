@@ -94,5 +94,5 @@ func printQueenPattern(pattern [][]string) {
 }
 
 func main() {
-	printQueenPattern(solveNQueens(4))
+	printQueenPattern(solveNQueens(8))
 }

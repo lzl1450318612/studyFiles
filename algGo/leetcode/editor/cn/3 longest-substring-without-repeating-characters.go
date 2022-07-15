@@ -1,5 +1,10 @@
 package main
 
+import (
+	"fmt"
+	"strings"
+)
+
 //给定一个字符串 s ，请你找出其中不含有重复字符的 最长子串 的长度。
 //
 //输入: s = "abcabcbb"
@@ -17,49 +22,41 @@ package main
 //
 //输入: s = ""
 //输出: 0
-//
-// 0 <= s.length <= 5 * 10⁴ 
-// s 由英文字母、数字、符号和空格组成 
 
 //leetcode submit region begin(Prohibit modification and deletion)
 func lengthOfLongestSubstring(s string) int {
-
 	if len(s) < 2 {
 		return len(s)
 	}
-
 	maxLen := 0
+	strArr := strings.Split(s, "")
+	l, r := 0, 0
 
-	m := make(map[byte]int)
-
-	left := 0
-	right := 0
-
-	flag := false
-
-	for right < len(s) {
-		if _, ok := m[s[right]]; ok {
-			if a := right - left; a > maxLen {
-				maxLen = a
+	for l < len(strArr) && r < len(strArr) && maxLen < len(strArr)-l {
+		r = l
+		record := make(map[string]int, len(strArr))
+		for r < len(strArr) {
+			if _, ok := record[strArr[r]]; ok {
+				if r-l > maxLen {
+					maxLen = r - l
+				}
+				l++
+				break
 			}
-			left = m[s[right]] + 1
-			flag = true
+			record[strArr[r]] = r
+			r++
 		}
-		m[s[right]] = right
-		right++
-
 	}
 
-	if a := right - left; !flag && a > maxLen {
-		maxLen = a
+	if r-l > maxLen {
+		return r - l
 	}
 
 	return maxLen
-
 }
 
 //leetcode submit region end(Prohibit modification and deletion)
 
-//func main() {
-//	fmt.Println(lengthOfLongestSubstring("aab"))
-//}
+func main() {
+	fmt.Println(lengthOfLongestSubstring("dvdf"))
+}
