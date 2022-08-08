@@ -25,5 +25,10 @@ package main
  */
 func maxPathSum(root *TreeNode) int {
 
+
+}
+
+func getMaxPathSum(root *TreeNode) {
+
 }
 //leetcode submit region end(Prohibit modification and deletion)
